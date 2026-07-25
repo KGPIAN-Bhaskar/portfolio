@@ -1,7 +1,20 @@
 import os
+import base64
 import json
 import streamlit as st
 from utils.html_render import render_html
+
+@st.cache_data
+def get_kit_pdf_base64(pdf_path: str) -> str:
+    """
+    Converts a local PDF file to base64 string for direct inline download/preview.
+    Cached for fast rendering performance.
+    """
+    if os.path.exists(pdf_path):
+        with open(pdf_path, "rb") as pdf_file:
+            return base64.b64encode(pdf_file.read()).decode("utf-8")
+    return ""
+
 
 @st.cache_data
 def load_interview_kits_data() -> dict:
@@ -26,6 +39,7 @@ def render_interview_kits():
     """
     kits_data = load_interview_kits_data()
     kits = kits_data.get("interview_kits", [])
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     # Anchored Section Title Header
     header_html = """
@@ -48,6 +62,11 @@ def render_interview_kits():
         k_file = kit.get("file", "")
         k_topics = kit.get("topics", [])
 
+        # Build Base64 Data URI for PDF
+        pdf_path = os.path.join(base_dir, k_file.replace("/", os.sep))
+        pdf_b64 = get_kit_pdf_base64(pdf_path)
+        pdf_href = f"data:application/pdf;base64,{pdf_b64}" if pdf_b64 else "#"
+
         # Build Topic Tags HTML
         topics_html = "".join([f'<span class="kit-topic-tag">• {topic}</span>' for topic in k_topics])
 
@@ -65,10 +84,10 @@ def render_interview_kits():
             </div>
             
             <div class="kit-actions">
-                <a href="{k_file}" target="_blank" class="kit-btn-preview" title="Preview PDF">
+                <a href="{pdf_href}" target="_blank" class="kit-btn-preview" title="Preview PDF">
                     👁️ Preview
                 </a>
-                <a href="{k_file}" download="{filename}" class="kit-btn-download" title="Download PDF">
+                <a href="{pdf_href}" download="{filename}" class="kit-btn-download" title="Download PDF">
                     📥 Download PDF
                 </a>
             </div>
