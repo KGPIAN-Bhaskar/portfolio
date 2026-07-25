@@ -1,0 +1,43 @@
+{
+  "experiences": [
+    {
+      "id": "exp-iitkgp",
+      "role": "Technology Research Intern",
+      "organization": "IIT Kharagpur",
+      "period": "June 2026 – July 2026",
+      "type": "Research Internship",
+      "icon": "🎓",
+      "bullets": [
+        "Developed optimized Python solutions for computational research, improving processing efficiency by 15% - 20%.",
+        "Designed and optimized algorithms, reducing computational runtime by 20% - 35% through efficient logic."
+      ],
+      "skills": ["Python", "Algorithm Optimization", "Computational Research", "Logic Design"]
+    },
+    {
+      "id": "exp-internstudio",
+      "role": "Data Science Intern",
+      "organization": "Internship Studio",
+      "period": "Jan 2026 – June 2026",
+      "type": "Data Science Internship",
+      "icon": "📊",
+      "bullets": [
+        "Built a Credit Card Eligibility Prediction System using Random Forest classification, achieving 97.5% prediction accuracy.",
+        "Developed a Future Sales Prediction Model using Random Forest regressors, yielding 94.8% accuracy."
+      ],
+      "skills": ["Machine Learning", "Random Forest", "Classification", "Regression Models"]
+    },
+    {
+      "id": "exp-kulturehire",
+      "role": "Data Analyst Intern",
+      "organization": "KultureHire",
+      "period": "Dec 2025 – Jan 2026",
+      "type": "Data Analytics Internship",
+      "icon": "📈",
+      "bullets": [
+        "Leveraged SQL and EDA to analyze 98K+ Gen-Z career survey records, reducing data processing time by approximately 35% through optimized SQL queries.",
+        "Uncovered actionable business insights using trend analysis, correlation matrices, and interactive visualizations."
+      ],
+      "skills": ["SQL", "Exploratory Data Analysis (EDA)", "Trend Analysis", "Data Visualization"]
+    }
+  ]
+}

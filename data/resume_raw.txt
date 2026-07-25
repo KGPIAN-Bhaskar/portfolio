@@ -1,0 +1,55 @@
+--- Page 1 ---
+Bhaskar Mandal
+♂phone+91 9883497074/envel⌢pemandalbhaskar540@gmail.com/linkedinLinkedIn/githubGitHub/githubPortfolio
+Education
+Indian Institute of T echnology , Kharagpur 2025 – 2027
+M.Tech in Computer Science And Data Processing CGPA:7.33/10
+Experience
+T echnology Research Intern|IIT Kharagpur June 2026 – July 2026
+•Developed optimized Python solutions for computational research, improving processing efficiency by 15% - 20%.
+•Designed and optimized algorithms, reducing computational runtime by 20% - 35% through efficient logic.
+Data Science Intern|Internship Studio|Certificate Jan 2026 – June 2026
+•Built a Credit Card Eligibility Prediction System usingRandom F orestclassification, achieving97.5%Prediction
+accuracy. Click
+•Developed a Future Sales Prediction Model usingRandom F orestregressors, yielding94.8%accuracy. Click
+Data Analyst Intern|KultureHire|Certificate Dec 2025 – Jan 2026
+•LeveragedSQLandEDAto analyze98K+ Gen-Z career survey records, reducing data processing time by
+approximately35%through optimized SQL queries while uncovering actionable business insights using trend, corre-
+lation, and visualization analysis.
+Projects
+Hybrid RAG Based Research Assistant|Python, Streamlit, Gemini LLM, ChromaDBJune 2026
+GitHub:Repo Link Live Demo:Streamlit Link
+•Developed aRetrieval-Augmented Generation (RAG)web application to answer questions from uploaded re-
+search papers usingGoogle Gemini APIandChromaDB.
+•Implemented document ingestion forPDF, DOCX, TXT, and Markdownfiles withtext chunking,vector
+embeddings, andsemantic search.
+•Generatedcontext-aware, citation-basedresponses by retrieving relevant document chunks through avector
+database.
+Multi-Agent Based Cooking System|Python, Streamlit, Gemini LLM, AgentsJuly 2026
+GitHub:Repo Link Live Demo:Streamlit Link
+•Developed amulti-agent AI cooking assistantfor recipe recommendation, ingredient substitution, nutrition
+analysis, and meal planning.
+•Designed amulti-agent workflowwhere specialized AI agents collaborate to generate accurate, context-aware
+responses using theGoogle Gemini API.
+•Implemented modular AgentOrchestrationto improve scalability, maintainability, and response quality.
+American Sign Language Recognition System|Python, MediaPipe, Scikit-learn, OpenCVJuly 2026
+GitHub:Repo Link Live Demo:Streamlit Link
+•Developed a real-timeASLrecognition system usingMediaPipelandmark detection, achieving98.73%accuracy.
+•Designed an end-to-endcomputer visionpipeline for landmark extraction, feature engineering, gesture prediction,
+improving inference speed by approximately30%.
+AgroCare: Plant Disease Detection and T reatment System|Python, TensorFlow, CNNJuly 2026
+GitHub:Repo Link Live Demo:Streamlit Link
+•Developed aCNN-based plant disease detection and treatment recommendation system, achieving98.12%
+accuracy,98.08% precision,98.05% recall, and98.06% F1-scoreacross38 plant disease classes.
+•Designed an end-to-enddeep learning pipelinefor image preprocessing, CNN model training, evaluation, and
+real-time inference, reducing inference latency by approximately30%.
+Technical Skills
+•Programming Languages:Python, C++, Dart.
+•Databases:MySQL, SQL, RDBMS.
+•Core Computer Science:DSA, OOP, DBMS.
+•Generative AI:LLMs, Prompt Engineering, Multi-Agent Systems, Agent Orchestrators, LangChain, LangGraph.
+Certifications
+•Prompting Essentials -Google Click
+•AI Essentials -Google Click
+•SQL -Udemy Click
+•Power BI -Skill Course Click

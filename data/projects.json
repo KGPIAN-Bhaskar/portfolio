@@ -1,0 +1,48 @@
+{
+  "projects": [
+    {
+      "id": "hybrid-rag",
+      "title": "Hybrid RAG Based Research Assistant",
+      "category": "Generative AI",
+      "description": "A Retrieval-Augmented Generation (RAG) application that ingests PDF, DOCX, TXT, and Markdown research papers, creating vector embeddings in ChromaDB to answer complex queries with context-aware citation tracking using Google Gemini API.",
+      "image": "assets/projects/rag_assistant.png",
+      "tags": ["Python", "Streamlit", "Gemini LLM", "ChromaDB", "RAG", "Vector Search"],
+      "github": "https://github.com/KGPIAN-Bhaskar/RAG-Based-Research-Assistant",
+      "demo": "https://ragbybhaskarmandal.streamlit.app/",
+      "highlight": "Citation-Based Responses • ChromaDB Vector Search"
+    },
+    {
+      "id": "multi-agent-cooking",
+      "title": "ChefAI: Multi-Agent Cooking System",
+      "category": "Agent Orchestration",
+      "description": "An intelligent multi-agent system where specialized AI agents collaborate to deliver accurate recipe recommendations, ingredient substitution options, detailed nutrition analysis, and customized meal planning.",
+      "image": "assets/projects/multi_agent_cooking.png",
+      "tags": ["Python", "Streamlit", "Gemini LLM", "Multi-Agent Systems", "LangGraph"],
+      "github": "https://github.com/KGPIAN-Bhaskar/ChefAI---Multi-Agent-Based-Cooking-System",
+      "demo": "https://multiagentbybhaskarmandal.streamlit.app/",
+      "highlight": "Collaborative AI Agents • Dynamic Meal Planning"
+    },
+    {
+      "id": "asl-recognition",
+      "title": "American Sign Language Recognition System",
+      "category": "Computer Vision",
+      "description": "A real-time computer vision system using MediaPipe hand landmark detection and Scikit-learn classifiers to recognize ASL gestures with 98.73% prediction accuracy and a 30% inference speed enhancement.",
+      "image": "assets/projects/asl_recognition.png",
+      "tags": ["Python", "MediaPipe", "Scikit-Learn", "OpenCV", "Computer Vision"],
+      "github": "https://github.com/KGPIAN-Bhaskar/ASL-Recognized-System",
+      "demo": "https://aslbybhaskarmandal.streamlit.app/",
+      "highlight": "98.73% Accuracy • Real-Time Landmark Tracking"
+    },
+    {
+      "id": "agrocare",
+      "title": "AgroCare: Plant Disease Detection & Treatment",
+      "category": "Deep Learning",
+      "description": "An end-to-end deep learning system utilizing CNNs trained on plant leaf images to classify 38 plant diseases with 98.12% accuracy and provide targeted treatment recommendations with reduced inference latency.",
+      "image": "assets/projects/agrocare_plant.png",
+      "tags": ["Python", "TensorFlow", "CNN", "Deep Learning", "Image Preprocessing"],
+      "github": "https://github.com/KGPIAN-Bhaskar/AgroCare-System",
+      "demo": "https://agrocarebybhaskarmandal.streamlit.app/",
+      "highlight": "98.12% Accuracy • 38 Disease Classes"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "interview_kits": [
+    {
+      "id": "kit-genai",
+      "icon": "🤖",
+      "title": "GenAI & RAG Interview Kit",
+      "file": "assets/interview_kits/genai.pdf",
+      "topics": [
+        "LLM Fundamentals",
+        "Prompt Engineering",
+        "Embeddings",
+        "Vector Databases",
+        "RAG",
+        "Agentic AI",
+        "LangChain",
+        "ChromaDB",
+        "FAISS"
+      ]
+    },
+    {
+      "id": "kit-ml",
+      "icon": "🧠",
+      "title": "AI / Machine Learning Interview Kit",
+      "file": "assets/interview_kits/ml.pdf",
+      "topics": [
+        "Machine Learning",
+        "Deep Learning",
+        "CNN",
+        "RNN",
+        "LSTM",
+        "Transformers",
+        "Model Evaluation",
+        "Feature Engineering"
+      ]
+    },
+    {
+      "id": "kit-ds",
+      "icon": "📊",
+      "title": "Data Science & SQL Interview Kit",
+      "file": "assets/interview_kits/datascience.pdf",
+      "topics": [
+        "SQL",
+        "Statistics",
+        "Python",
+        "EDA",
+        "Feature Engineering",
+        "Business Case Studies",
+        "Power BI",
+        "Pandas"
+      ]
+    },
+    {
+      "id": "kit-dsa",
+      "icon": "💻",
+      "title": "DSA & Python Interview Kit",
+      "file": "assets/interview_kits/dsa.pdf",
+      "topics": [
+        "Arrays",
+        "Strings",
+        "Trees",
+        "Graphs",
+        "Dynamic Programming",
+        "Recursion",
+        "Python Coding",
+        "OOP"
+      ]
+    }
+  ]
+}

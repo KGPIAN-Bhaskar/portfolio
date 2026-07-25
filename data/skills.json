@@ -1,0 +1,79 @@
+{
+  "categories": [
+    {
+      "id": "genai",
+      "title": "Generative AI & LLMs",
+      "icon": "🤖",
+      "badge": "Core Expertise",
+      "skills": [
+        { "name": "Google Gemini LLM", "level": 95, "tag": "Expert" },
+        { "name": "Retrieval-Augmented Generation (RAG)", "level": 95, "tag": "Expert" },
+        { "name": "Multi-Agent Systems & Orchestration", "level": 90, "tag": "Advanced" },
+        { "name": "LangChain & LangGraph", "level": 90, "tag": "Advanced" },
+        { "name": "Prompt Engineering & Context Tuning", "level": 95, "tag": "Expert" }
+      ]
+    },
+    {
+      "id": "nlp_vector",
+      "title": "NLP, LLMs & Vector Search",
+      "icon": "🚀",
+      "badge": "GenAI & Search",
+      "skills": [
+        { "name": "Prompt Engineering & Fine-Tuning", "level": 95, "tag": "Expert" },
+        { "name": "Natural Language Processing (NLP)", "level": 90, "tag": "Advanced" },
+        { "name": "LLMs & Transformer Architectures", "level": 95, "tag": "Expert" },
+        { "name": "Embeddings & Semantic Search", "level": 92, "tag": "Expert" },
+        { "name": "Keyword & Hybrid Vector Search", "level": 90, "tag": "Advanced" },
+        { "name": "ChromaDB & FAISS Vector Databases", "level": 95, "tag": "Expert" }
+      ]
+    },
+    {
+      "id": "mldl",
+      "title": "Machine Learning & Computer Vision",
+      "icon": "🧠",
+      "badge": "Deep Learning",
+      "skills": [
+        { "name": "TensorFlow & CNNs", "level": 90, "tag": "Advanced" },
+        { "name": "PyTorch", "level": 85, "tag": "Proficient" },
+        { "name": "MediaPipe & Gesture Landmark Extraction", "level": 92, "tag": "Expert" },
+        { "name": "OpenCV Computer Vision", "level": 88, "tag": "Advanced" },
+        { "name": "Scikit-Learn Classifiers & Regressors", "level": 90, "tag": "Advanced" }
+      ]
+    },
+    {
+      "id": "languages",
+      "title": "Programming Languages",
+      "icon": "⚡",
+      "badge": "Development",
+      "skills": [
+        { "name": "Python", "level": 95, "tag": "Expert" },
+        { "name": "C++", "level": 85, "tag": "Proficient" },
+        { "name": "Dart", "level": 75, "tag": "Intermediate" },
+        { "name": "SQL", "level": 90, "tag": "Advanced" }
+      ]
+    },
+    {
+      "id": "databases",
+      "title": "Databases & Vector Storage",
+      "icon": "🗄️",
+      "badge": "Data Systems",
+      "skills": [
+        { "name": "ChromaDB (Vector Database)", "level": 92, "tag": "Expert" },
+        { "name": "MySQL & Relational DBs (RDBMS)", "level": 88, "tag": "Advanced" },
+        { "name": "Optimized SQL Queries & EDA", "level": 90, "tag": "Advanced" }
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Core CS & Engineering Tools",
+      "icon": "🛠️",
+      "badge": "CS Fundamentals",
+      "skills": [
+        { "name": "Data Structures & Algorithms (DSA)", "level": 90, "tag": "Advanced" },
+        { "name": "Object-Oriented Programming (OOP)", "level": 90, "tag": "Advanced" },
+        { "name": "Streamlit & Web App Interfaces", "level": 95, "tag": "Expert" },
+        { "name": "Power BI & Data Visualization", "level": 85, "tag": "Proficient" }
+      ]
+    }
+  ]
+}
