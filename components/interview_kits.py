@@ -5,10 +5,10 @@ import streamlit as st
 from utils.html_render import render_html
 
 @st.cache_data
-def get_kit_file_base64(file_path: str) -> str:
+def get_kit_file_base64(file_path: str, mtime: float = 0) -> str:
     """
     Converts a local file (PDF) to base64 string for direct inline download.
-    Cached for fast rendering performance.
+    Cached for fast rendering performance, automatically invalidating when the file is updated.
     """
     if os.path.exists(file_path):
         with open(file_path, "rb") as f:
@@ -17,7 +17,7 @@ def get_kit_file_base64(file_path: str) -> str:
 
 
 @st.cache_data
-def load_interview_kits_data() -> dict:
+def load_interview_kits_data(mtime: float = 0) -> dict:
     """
     Safely loads interview prep kit metadata from data/interview_kits.json.
     Cached using @st.cache_data for instant rendering performance.
@@ -55,9 +55,12 @@ def render_interview_kits():
     - Preview button: native Streamlit button triggering dialog modal with image format.
     - Download PDF button: direct PDF download link.
     """
-    kits_data = load_interview_kits_data()
-    kits = kits_data.get("interview_kits", [])
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    json_path = os.path.join(base_dir, "data", "interview_kits.json")
+    json_mtime = os.path.getmtime(json_path) if os.path.exists(json_path) else 0
+
+    kits_data = load_interview_kits_data(json_mtime)
+    kits = kits_data.get("interview_kits", [])
 
     # Anchored Section Title Header
     header_html = """
@@ -72,7 +75,7 @@ def render_interview_kits():
     """
     render_html(header_html)
 
-    # Custom CSS targeting Streamlit preview buttons to match portfolio design
+    # Custom CSS targeting Streamlit preview & download buttons to match portfolio design
     custom_btn_css = """
     <style>
     div[data-testid="stColumn"] div[data-testid="stButton"] button {
@@ -93,6 +96,23 @@ def render_interview_kits():
         box-shadow: 0 0 20px rgba(0, 245, 212, 0.3) !important;
         transform: translateY(-2px) !important;
     }
+    div[data-testid="stColumn"] div[data-testid="stDownloadButton"] button {
+        background: linear-gradient(135deg, #00f5d4 0%, #00bbf9 100%) !important;
+        border: none !important;
+        color: #070a13 !important;
+        border-radius: 9999px !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        padding: 0.55rem 1rem !important;
+        transition: all 0.2s ease-in-out !important;
+        width: 100% !important;
+        box-shadow: 0 0 15px rgba(0, 245, 212, 0.3) !important;
+    }
+    div[data-testid="stColumn"] div[data-testid="stDownloadButton"] button:hover {
+        box-shadow: 0 0 25px rgba(0, 245, 212, 0.6) !important;
+        transform: translateY(-2px) !important;
+        color: #070a13 !important;
+    }
     </style>
     """
     render_html(custom_btn_css)
@@ -108,13 +128,15 @@ def render_interview_kits():
         k_preview_img = kit.get("preview_image", "")
         k_topics = kit.get("topics", [])
 
-        # Build Base64 Data URI for PDF Download
         pdf_path = os.path.join(base_dir, k_file.replace("/", os.sep))
-        pdf_b64 = get_kit_file_base64(pdf_path)
-        pdf_href = f"data:application/pdf;base64,{pdf_b64}" if pdf_b64 else "#"
         filename = os.path.basename(k_file)
-
         img_path = os.path.join(base_dir, k_preview_img.replace("/", os.sep))
+
+        # Read binary PDF file for native Streamlit download
+        pdf_bytes = b""
+        if os.path.exists(pdf_path):
+            with open(pdf_path, "rb") as f:
+                pdf_bytes = f.read()
 
         # Build Topic Tags HTML
         topics_html = "".join([f'<span class="kit-topic-tag">• {topic}</span>' for topic in k_topics])
@@ -144,12 +166,14 @@ def render_interview_kits():
                     show_kit_preview_dialog(k_title, img_path)
 
             with b_col2:
-                download_btn_html = f"""
-                <a href="{pdf_href}" download="{filename}" class="kit-btn-download" style="width: 100%; box-sizing: border-box; margin-top: 2px;">
-                    📥 Download PDF
-                </a>
-                """
-                render_html(download_btn_html)
+                st.download_button(
+                    label="📥 Download PDF",
+                    data=pdf_bytes,
+                    file_name=filename,
+                    mime="application/pdf",
+                    key=f"download_btn_{k_id}_{idx}",
+                    use_container_width=True
+                )
 
             # Spacing below card
             render_html('<div style="margin-bottom: 1.75rem;"></div>')
