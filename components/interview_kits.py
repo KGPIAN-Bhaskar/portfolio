@@ -36,18 +36,14 @@ def load_interview_kits_data() -> dict:
 # Streamlit native modal dialog for image preview
 if hasattr(st, "dialog"):
     @st.dialog("📄 Interview Kit Image Preview", width="large")
-    def display_kit_dialog(title: str, img_path: str):
-        st.subheader(title)
+    def show_kit_preview_dialog(title: str, img_path: str):
+        st.markdown(f"### {title}")
         if os.path.exists(img_path):
             st.image(img_path, use_container_width=True)
         else:
-            st.warning("Preview image file not found.")
-        if st.button("Close Preview", use_container_width=True):
-            if "preview_kit" in st.query_params:
-                del st.query_params["preview_kit"]
-            st.rerun()
+            st.warning("Preview image file not found on server.")
 else:
-    def display_kit_dialog(title: str, img_path: str):
+    def show_kit_preview_dialog(title: str, img_path: str):
         st.info(f"Previewing: {title}")
         if os.path.exists(img_path):
             st.image(img_path, use_container_width=True)
@@ -56,23 +52,12 @@ else:
 def render_interview_kits():
     """
     Renders the Interview Kits section with 4 large premium cards loaded from JSON.
-    - Preview button: opens preuploaded image format of the kit in a native modal dialog.
-    - Download PDF button: downloads preuploaded PDF file of the kit directly.
+    - Preview button: native Streamlit button triggering dialog modal with image format.
+    - Download PDF button: direct PDF download link.
     """
     kits_data = load_interview_kits_data()
     kits = kits_data.get("interview_kits", [])
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-    # Check if a preview modal was requested via query param
-    requested_preview_id = st.query_params.get("preview_kit")
-    if requested_preview_id:
-        for kit in kits:
-            if kit.get("id") == requested_preview_id:
-                k_title = kit.get("title", "Kit Preview")
-                k_preview_img = kit.get("preview_image", "")
-                img_path = os.path.join(base_dir, k_preview_img.replace("/", os.sep))
-                display_kit_dialog(k_title, img_path)
-                break
 
     # Anchored Section Title Header
     header_html = """
@@ -87,55 +72,87 @@ def render_interview_kits():
     """
     render_html(header_html)
 
-    # Build Cards HTML
-    cards_html_list = []
-    for kit in kits:
+    # Custom CSS targeting Streamlit preview buttons to match portfolio design
+    custom_btn_css = """
+    <style>
+    div[data-testid="stColumn"] div[data-testid="stButton"] button {
+        background: rgba(30, 41, 59, 0.85) !important;
+        border: 1px solid rgba(0, 245, 212, 0.35) !important;
+        color: #f8fafc !important;
+        border-radius: 9999px !important;
+        font-weight: 600 !important;
+        font-size: 0.85rem !important;
+        padding: 0.55rem 1rem !important;
+        transition: all 0.2s ease-in-out !important;
+        width: 100% !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+    }
+    div[data-testid="stColumn"] div[data-testid="stButton"] button:hover {
+        border-color: #00f5d4 !important;
+        color: #00f5d4 !important;
+        box-shadow: 0 0 20px rgba(0, 245, 212, 0.3) !important;
+        transform: translateY(-2px) !important;
+    }
+    </style>
+    """
+    render_html(custom_btn_css)
+
+    # Build 2x2 Grid via Streamlit columns
+    col1, col2 = st.columns(2, gap="medium")
+
+    for idx, kit in enumerate(kits):
         k_id = kit.get("id", "")
         k_icon = kit.get("icon", "📚")
         k_title = kit.get("title", "")
         k_file = kit.get("file", "")
+        k_preview_img = kit.get("preview_image", "")
         k_topics = kit.get("topics", [])
 
         # Build Base64 Data URI for PDF Download
         pdf_path = os.path.join(base_dir, k_file.replace("/", os.sep))
         pdf_b64 = get_kit_file_base64(pdf_path)
         pdf_href = f"data:application/pdf;base64,{pdf_b64}" if pdf_b64 else "#"
+        filename = os.path.basename(k_file)
+
+        img_path = os.path.join(base_dir, k_preview_img.replace("/", os.sep))
 
         # Build Topic Tags HTML
         topics_html = "".join([f'<span class="kit-topic-tag">• {topic}</span>' for topic in k_topics])
 
-        filename = os.path.basename(k_file)
+        target_col = col1 if idx % 2 == 0 else col2
 
-        card_html = f"""
-        <div class="interview-kit-card">
-            <div class="kit-header">
-                <div class="kit-icon">{k_icon}</div>
-                <h3 class="kit-title">{k_title}</h3>
+        with target_col:
+            # Card Container
+            card_html = f"""
+            <div class="interview-kit-card" style="margin-bottom: 0px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none; padding-bottom: 1rem;">
+                <div class="kit-header">
+                    <div class="kit-icon">{k_icon}</div>
+                    <h3 class="kit-title">{k_title}</h3>
+                </div>
+                <div class="kit-topics-container" style="margin-bottom: 0.5rem;">
+                    {topics_html}
+                </div>
             </div>
-            
-            <div class="kit-topics-container">
-                {topics_html}
-            </div>
-            
-            <div class="kit-actions">
-                <a href="?preview_kit={k_id}#kits" target="_self" class="kit-btn-preview" title="Preview Kit Image Format">
-                    👁️ Preview
-                </a>
-                <a href="{pdf_href}" download="{filename}" class="kit-btn-download" title="Download PDF Kit">
+            """
+            render_html(card_html)
+
+            # Action Buttons Row
+            b_col1, b_col2 = st.columns(2, gap="small")
+
+            with b_col1:
+                if st.button("👁️ Preview", key=f"preview_btn_{k_id}_{idx}", use_container_width=True):
+                    show_kit_preview_dialog(k_title, img_path)
+
+            with b_col2:
+                download_btn_html = f"""
+                <a href="{pdf_href}" download="{filename}" class="kit-btn-download" style="width: 100%; box-sizing: border-box; margin-top: 2px;">
                     📥 Download PDF
                 </a>
-            </div>
-        </div>
-        """
-        cards_html_list.append(card_html)
+                """
+                render_html(download_btn_html)
 
-    all_cards_html = "".join(cards_html_list)
+            # Spacing below card
+            render_html('<div style="margin-bottom: 1.75rem;"></div>')
 
-    grid_html = f"""
-    <div class="interview-kits-grid">
-        {all_cards_html}
-    </div>
-    """
-    render_html(grid_html)
 
 
