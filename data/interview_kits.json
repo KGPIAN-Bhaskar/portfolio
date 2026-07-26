@@ -5,6 +5,7 @@
       "icon": "🤖",
       "title": "GenAI & RAG Interview Kit",
       "file": "assets/interview_kits/genai.pdf",
+      "preview_image": "assets/interview_kits/genai_preview.png",
       "topics": [
         "LLM Fundamentals",
         "Prompt Engineering",
@@ -22,6 +23,7 @@
       "icon": "🧠",
       "title": "AI / Machine Learning Interview Kit",
       "file": "assets/interview_kits/ml.pdf",
+      "preview_image": "assets/interview_kits/ml_preview.png",
       "topics": [
         "Machine Learning",
         "Deep Learning",
@@ -38,6 +40,7 @@
       "icon": "📊",
       "title": "Data Science & SQL Interview Kit",
       "file": "assets/interview_kits/datascience.pdf",
+      "preview_image": "assets/interview_kits/datascience_preview.png",
       "topics": [
         "SQL",
         "Statistics",
@@ -54,6 +57,7 @@
       "icon": "💻",
       "title": "DSA & Python Interview Kit",
       "file": "assets/interview_kits/dsa.pdf",
+      "preview_image": "assets/interview_kits/dsa_preview.png",
       "topics": [
         "Arrays",
         "Strings",
