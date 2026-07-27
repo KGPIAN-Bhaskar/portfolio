@@ -1,20 +1,11 @@
 import os
-import base64
 import streamlit as st
 from data.profile_data import PROFILE_DATA
 from utils.html_render import render_html
-
-def get_image_base64(image_path: str) -> str:
-    """
-    Converts a local image file to base64 for embedding inside HTML.
-    """
-    if os.path.exists(image_path):
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode("utf-8")
-    return ""
+from utils.asset_loader import load_cached_base64, load_cached_binary
 
 
-def render_about():
+def render_about() -> None:
     """
     Renders the About Me section matching the reference design.
     """
@@ -22,7 +13,8 @@ def render_about():
     img_path = os.path.join(base_dir, "assets", "profile.png")
     pdf_path = os.path.join(base_dir, "Bhaskar_Mandal_Gen_AI_Engineer_25_july.pdf")
     
-    img_b64 = get_image_base64(img_path)
+    img_mtime = os.path.getmtime(img_path) if os.path.exists(img_path) else 0.0
+    img_b64 = load_cached_base64(img_path, img_mtime)
     avatar_src = f"data:image/png;base64,{img_b64}" if img_b64 else "https://via.placeholder.com/170"
 
     # SVG Icons
@@ -124,12 +116,14 @@ def render_about():
     with col1:
         render_html('<div class="cv-status-text">📄 Curriculum Vitae Ready for Review</div>')
     with col2:
-        if os.path.exists(pdf_path):
-            with open(pdf_path, "rb") as pdf_file:
-                st.download_button(
-                    label="📥 Download Resume",
-                    data=pdf_file.read(),
-                    file_name="Bhaskar_Mandal_Gen_AI_Engineer.pdf",
-                    mime="application/pdf",
-                    use_container_width=True
-                )
+        pdf_mtime = os.path.getmtime(pdf_path) if os.path.exists(pdf_path) else 0.0
+        pdf_bytes = load_cached_binary(pdf_path, pdf_mtime)
+        if pdf_bytes:
+            st.download_button(
+                label="📥 Download Resume",
+                data=pdf_bytes,
+                file_name="Bhaskar_Mandal_Gen_AI_Engineer.pdf",
+                mime="application/pdf",
+                use_container_width=True
+            )
+

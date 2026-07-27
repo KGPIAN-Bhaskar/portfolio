@@ -1,45 +1,19 @@
 import os
-import base64
-import json
 import streamlit as st
 from utils.html_render import render_html
-
-@st.cache_data
-def get_project_image_base64(image_path: str, mtime: float = 0) -> str:
-    """
-    Converts a local image file to a base64 encoded string for inline HTML rendering.
-    Cached for fast rendering performance, invalidated when file mtime changes.
-    """
-    if os.path.exists(image_path):
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode("utf-8")
-    return ""
+from utils.asset_loader import load_cached_base64, load_cached_json
 
 
-@st.cache_data
-def load_projects_data() -> dict:
-    """
-    Safely loads project records from data/projects.json.
-    Cached for fast rendering performance.
-    """
-    try:
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        json_path = os.path.join(base_dir, "data", "projects.json")
-        if os.path.exists(json_path):
-            with open(json_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception as e:
-        st.error(f"Error loading projects.json: {str(e)}")
-    return {"projects": []}
-
-
-def render_projects():
+def render_projects() -> None:
     """
     Renders the Featured Projects section with reusable glass cards loaded from JSON.
     """
-    projects_data = load_projects_data()
-    projects = projects_data.get("projects", [])
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    json_path = os.path.join(base_dir, "data", "projects.json")
+    json_mtime = os.path.getmtime(json_path) if os.path.exists(json_path) else 0.0
+
+    projects_data = load_cached_json(json_path, json_mtime)
+    projects = projects_data.get("projects", [])
 
     # Anchored Section Title Header
     header_html = """
@@ -65,8 +39,8 @@ def render_projects():
 
         # Encode local cover image to base64 (busting cache when file mtime changes)
         img_path = os.path.join(base_dir, p_img_rel.replace("/", os.sep))
-        mtime = os.path.getmtime(img_path) if os.path.exists(img_path) else 0
-        img_b64 = get_project_image_base64(img_path, mtime)
+        mtime = os.path.getmtime(img_path) if os.path.exists(img_path) else 0.0
+        img_b64 = load_cached_base64(img_path, mtime)
         img_src = f"data:image/png;base64,{img_b64}" if img_b64 else "https://via.placeholder.com/600x350/0f172a/00f5d4?text=Project+Thumbnail"
 
         # Build Tech Stack Pills HTML

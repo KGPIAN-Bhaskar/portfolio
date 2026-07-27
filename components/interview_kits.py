@@ -1,36 +1,7 @@
 import os
-import base64
-import json
 import streamlit as st
 from utils.html_render import render_html
-
-@st.cache_data
-def get_kit_file_base64(file_path: str, mtime: float = 0) -> str:
-    """
-    Converts a local file (PDF) to base64 string for direct inline download.
-    Cached for fast rendering performance, automatically invalidating when the file is updated.
-    """
-    if os.path.exists(file_path):
-        with open(file_path, "rb") as f:
-            return base64.b64encode(f.read()).decode("utf-8")
-    return ""
-
-
-@st.cache_data
-def load_interview_kits_data(mtime: float = 0) -> dict:
-    """
-    Safely loads interview prep kit metadata from data/interview_kits.json.
-    Cached using @st.cache_data for instant rendering performance.
-    """
-    try:
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        json_path = os.path.join(base_dir, "data", "interview_kits.json")
-        if os.path.exists(json_path):
-            with open(json_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception as e:
-        st.error(f"Error loading interview_kits.json: {str(e)}")
-    return {"interview_kits": []}
+from utils.asset_loader import load_cached_binary, load_cached_json
 
 
 # Streamlit native modal dialog for image preview
@@ -59,7 +30,7 @@ def render_interview_kits():
     json_path = os.path.join(base_dir, "data", "interview_kits.json")
     json_mtime = os.path.getmtime(json_path) if os.path.exists(json_path) else 0
 
-    kits_data = load_interview_kits_data(json_mtime)
+    kits_data = load_cached_json(json_path, json_mtime)
     kits = kits_data.get("interview_kits", [])
 
     # Anchored Section Title Header
@@ -132,11 +103,9 @@ def render_interview_kits():
         filename = os.path.basename(k_file)
         img_path = os.path.join(base_dir, k_preview_img.replace("/", os.sep))
 
-        # Read binary PDF file for native Streamlit download
-        pdf_bytes = b""
-        if os.path.exists(pdf_path):
-            with open(pdf_path, "rb") as f:
-                pdf_bytes = f.read()
+        # Read cached binary PDF file for native Streamlit download
+        pdf_mtime = os.path.getmtime(pdf_path) if os.path.exists(pdf_path) else 0.0
+        pdf_bytes = load_cached_binary(pdf_path, pdf_mtime)
 
         # Build Topic Tags HTML
         topics_html = "".join([f'<span class="kit-topic-tag">• {topic}</span>' for topic in k_topics])

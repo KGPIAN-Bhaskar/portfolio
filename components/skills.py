@@ -1,30 +1,18 @@
 import os
-import json
 import streamlit as st
 from utils.html_render import render_html
-
-@st.cache_data
-def load_skills_data() -> dict:
-    """
-    Safely loads skills categories and item lists from data/skills.json.
-    Cached using @st.cache_data for instant rendering performance.
-    """
-    try:
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        json_path = os.path.join(base_dir, "data", "skills.json")
-        if os.path.exists(json_path):
-            with open(json_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception as e:
-        st.error(f"Error loading skills.json: {str(e)}")
-    return {"categories": []}
+from utils.asset_loader import load_cached_json
 
 
-def render_skills():
+def render_skills() -> None:
     """
     Renders the Technical Skills section with animated glass cards loaded dynamically from JSON.
     """
-    skills_data = load_skills_data()
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    json_path = os.path.join(base_dir, "data", "skills.json")
+    json_mtime = os.path.getmtime(json_path) if os.path.exists(json_path) else 0.0
+
+    skills_data = load_cached_json(json_path, json_mtime)
     categories = skills_data.get("categories", skills_data.get("skills_categories", []))
 
     # Anchored Section Title Header

@@ -1,25 +1,18 @@
 import os
-import base64
 import streamlit as st
 from data.profile_data import PROFILE_DATA
 from utils.html_render import render_html
+from utils.asset_loader import load_cached_base64
 
-def get_image_base64(image_path: str) -> str:
-    """
-    Converts local image file to base64 string for embedding.
-    """
-    if os.path.exists(image_path):
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode("utf-8")
-    return ""
 
-def render_hero():
+def render_hero() -> None:
     """
     Renders the Home / Hero section component.
     """
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     img_path = os.path.join(base_dir, "assets", "profile.png")
-    img_b64 = get_image_base64(img_path)
+    mtime = os.path.getmtime(img_path) if os.path.exists(img_path) else 0.0
+    img_b64 = load_cached_base64(img_path, mtime)
     
     avatar_src = f"data:image/png;base64,{img_b64}" if img_b64 else "https://via.placeholder.com/170"
 

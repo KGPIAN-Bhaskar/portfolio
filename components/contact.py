@@ -12,7 +12,7 @@ def is_valid_email(email: str) -> bool:
     return bool(re.match(pattern, email.strip()))
 
 
-def render_contact():
+def render_contact() -> None:
     """
     Renders the Contact section featuring contact metadata callout and a Google Sheets + Email connected form.
     """

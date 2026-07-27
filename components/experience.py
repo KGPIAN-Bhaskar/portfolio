@@ -1,30 +1,18 @@
 import os
-import json
 import streamlit as st
 from utils.html_render import render_html
-
-@st.cache_data
-def load_experience_data() -> dict:
-    """
-    Safely loads experience records from data/experience.json without hardcoding.
-    Cached using @st.cache_data for instant rendering performance.
-    """
-    try:
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        json_path = os.path.join(base_dir, "data", "experience.json")
-        if os.path.exists(json_path):
-            with open(json_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception as e:
-        st.error(f"Error loading experience.json: {str(e)}")
-    return {"experiences": []}
+from utils.asset_loader import load_cached_json
 
 
-def render_experience():
+def render_experience() -> None:
     """
     Renders the Work Experience section with a vertical animated glass timeline loaded from JSON.
     """
-    exp_data = load_experience_data()
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    json_path = os.path.join(base_dir, "data", "experience.json")
+    json_mtime = os.path.getmtime(json_path) if os.path.exists(json_path) else 0.0
+
+    exp_data = load_cached_json(json_path, json_mtime)
     experiences = exp_data.get("experiences", [])
 
     # Anchored Section Title Header

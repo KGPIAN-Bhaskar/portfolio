@@ -1,10 +1,14 @@
 import os
 import json
+import html
+import logging
 import ssl
 import urllib.request
 import urllib.parse
 from datetime import datetime
 import streamlit as st
+
+logger = logging.getLogger(__name__)
 
 try:
     import requests
@@ -187,14 +191,14 @@ def send_to_google_sheets(name: str, email: str, subject: str, message: str) -> 
             "Google Apps Script URL / ID is missing. Please add `GOOGLE_APPS_SCRIPT_URL` or `GOOGLE_APPS_SCRIPT_ID` in your `.env` file or Streamlit Cloud Secrets (Advanced Settings)."
         )
 
-    # 3. Construct Payload with Timestamp and Notification Recipient
+    # 3. Construct Payload with Timestamp and Sanitized Notification Inputs
     timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     payload = {
         "timestamp": timestamp_str,
-        "name": name.strip(),
-        "email": email.strip(),
-        "subject": subject.strip(),
-        "message": message.strip(),
+        "name": html.escape(name.strip()),
+        "email": html.escape(email.strip()),
+        "subject": html.escape(subject.strip()),
+        "message": html.escape(message.strip()),
         "notification_email": "mandalbhaskar540@gmail.com"
     }
 

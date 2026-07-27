@@ -1,21 +1,10 @@
 import os
-import base64
 import streamlit as st
 from utils.html_render import render_html
-
-@st.cache_data
-def get_pdf_base64(pdf_path: str) -> str:
-    """
-    Converts a local PDF file to a base64 encoded string for direct inline download.
-    Cached for fast rendering performance.
-    """
-    if os.path.exists(pdf_path):
-        with open(pdf_path, "rb") as pdf_file:
-            return base64.b64encode(pdf_file.read()).decode("utf-8")
-    return ""
+from utils.asset_loader import load_cached_base64
 
 
-def render_hire_me():
+def render_hire_me() -> None:
     """
     Renders Phase 9 Hire Me feature:
     1. Floating bottom-right action button (desktop only) linking to #contact with pulse glow animation.
@@ -26,7 +15,8 @@ def render_hire_me():
     if not os.path.exists(pdf_path):
         pdf_path = os.path.join(base_dir, "Bhaskar_Mandal_Gen_AI_Engineer_25_july.pdf")
 
-    pdf_b64 = get_pdf_base64(pdf_path)
+    pdf_mtime = os.path.getmtime(pdf_path) if os.path.exists(pdf_path) else 0.0
+    pdf_b64 = load_cached_base64(pdf_path, pdf_mtime)
     resume_href = f"data:application/pdf;base64,{pdf_b64}" if pdf_b64 else "#"
 
     # 1. Floating Hire Me Button (Desktop Only)
