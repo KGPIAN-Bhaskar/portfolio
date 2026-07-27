@@ -32,7 +32,10 @@
         "LSTM",
         "Transformers",
         "Model Evaluation",
-        "Feature Engineering"
+        "Feature Engineering",
+        "pytorch",
+        "Mnist",
+        "Vision Models"
       ]
     },
     {
@@ -65,8 +68,12 @@
         "Graphs",
         "Dynamic Programming",
         "Recursion",
+        "linkedlist",
+        "Heaps",
         "Python Coding",
-        "OOP"
+        "OOP",
+        "Graphs",
+        "Binary Search"
       ]
     }
   ]
