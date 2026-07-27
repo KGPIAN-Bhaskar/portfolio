@@ -5,10 +5,10 @@ import streamlit as st
 from utils.html_render import render_html
 
 @st.cache_data
-def get_project_image_base64(image_path: str) -> str:
+def get_project_image_base64(image_path: str, mtime: float = 0) -> str:
     """
     Converts a local image file to a base64 encoded string for inline HTML rendering.
-    Cached for fast rendering performance.
+    Cached for fast rendering performance, invalidated when file mtime changes.
     """
     if os.path.exists(image_path):
         with open(image_path, "rb") as img_file:
@@ -58,14 +58,15 @@ def render_projects():
         p_category = proj.get("category", "")
         p_desc = proj.get("description", "")
         p_highlight = proj.get("highlight", "")
-        p_tech = proj.get("tech_stack", [])
+        p_tech = proj.get("tags", proj.get("tech_stack", []))
         p_img_rel = proj.get("image", "")
-        p_github = proj.get("github_url", "#")
-        p_demo = proj.get("demo_url", "#")
+        p_github = proj.get("github", proj.get("github_url", "#"))
+        p_demo = proj.get("demo", proj.get("demo_url", "#"))
 
-        # Encode local cover image to base64
+        # Encode local cover image to base64 (busting cache when file mtime changes)
         img_path = os.path.join(base_dir, p_img_rel.replace("/", os.sep))
-        img_b64 = get_project_image_base64(img_path)
+        mtime = os.path.getmtime(img_path) if os.path.exists(img_path) else 0
+        img_b64 = get_project_image_base64(img_path, mtime)
         img_src = f"data:image/png;base64,{img_b64}" if img_b64 else "https://via.placeholder.com/600x350/0f172a/00f5d4?text=Project+Thumbnail"
 
         # Build Tech Stack Pills HTML
