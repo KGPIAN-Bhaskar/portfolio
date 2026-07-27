@@ -17,7 +17,7 @@ def load_skills_data() -> dict:
                 return json.load(f)
     except Exception as e:
         st.error(f"Error loading skills.json: {str(e)}")
-    return {"skills_categories": []}
+    return {"categories": []}
 
 
 def render_skills():
@@ -25,7 +25,7 @@ def render_skills():
     Renders the Technical Skills section with animated glass cards loaded dynamically from JSON.
     """
     skills_data = load_skills_data()
-    categories = skills_data.get("skills_categories", [])
+    categories = skills_data.get("categories", skills_data.get("skills_categories", []))
 
     # Anchored Section Title Header
     header_html = """
@@ -40,9 +40,10 @@ def render_skills():
     # Build Skill Cards HTML
     cards_html_list = []
     for cat in categories:
-        cat_title = cat.get("category", "")
+        cat_title = cat.get("title", cat.get("category", ""))
         cat_icon = cat.get("icon", "⚡")
         cat_skills = cat.get("skills", [])
+        cat_badge = cat.get("badge", f"{len(cat_skills)} Skills")
 
         # Build Skill Progress Bars HTML
         items_html_list = []
@@ -73,7 +74,7 @@ def render_skills():
                     <span class="category-icon">{cat_icon}</span>
                     <h3 class="category-title">{cat_title}</h3>
                 </div>
-                <span class="category-badge">{len(cat_skills)} Skills</span>
+                <span class="category-badge">{cat_badge}</span>
             </div>
             <div class="skill-items-list">
                 {all_items_html}
