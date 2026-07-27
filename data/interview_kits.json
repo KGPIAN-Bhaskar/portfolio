@@ -52,7 +52,11 @@
         "Feature Engineering",
         "Business Case Studies",
         "Power BI",
-        "Pandas"
+        "Pandas",
+        "Seaborn",
+        "Numpy",
+        "ETL",
+        "DAX"
       ]
     },
     {
