@@ -11,7 +11,8 @@ except ImportError:
 
 def get_ga_measurement_id() -> str:
     """
-    Retrieves Google Analytics 4 Measurement ID from environment or Streamlit secrets.
+    Retrieves Google Analytics 4 Measurement ID from environment, Streamlit secrets,
+    or defaults to 'G-9HZN7HG1DN'.
     """
     ga_id = os.getenv("GA_MEASUREMENT_ID", "").strip()
     if not ga_id:
@@ -20,6 +21,8 @@ def get_ga_measurement_id() -> str:
                 ga_id = str(st.secrets["GA_MEASUREMENT_ID"]).strip()
         except Exception:
             pass
+    if not ga_id:
+        ga_id = "G-9HZN7HG1DN"
     return ga_id
 
 
