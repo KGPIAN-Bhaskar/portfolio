@@ -201,13 +201,13 @@ def send_to_google_sheets(name: str, email: str, subject: str, message: str) -> 
     # 4. First attempt with configured URL
     ok, err_msg = _post_payload(script_url, payload)
     if ok:
-        return (True, "Thank you! Your message has been saved to Google Sheets and emailed to mandalbhaskar540@gmail.com.")
+        return (True, "🎉 Thank you for reaching out!,I'll get back to you as soon as possible.")
 
     # 5. Automatic fallback attempt to DEFAULT_APPS_SCRIPT_URL if configured URL failed (e.g., 404 Not Found)
     if script_url != DEFAULT_APPS_SCRIPT_URL:
         ok_fb, err_fb = _post_payload(DEFAULT_APPS_SCRIPT_URL, payload)
         if ok_fb:
-            return (True, "Thank you! Your message has been saved to Google Sheets and emailed to mandalbhaskar540@gmail.com.")
+            return (True, "🎉 Thank you for reaching out!,I'll get back to you as soon as possible.")
 
     return (False, f"Submission error ({err_msg}). Please verify your Google Apps Script Web App deployment settings ('Anyone' access).")
 
