@@ -67,7 +67,8 @@ def render_interview_kits():
         box-shadow: 0 0 20px rgba(0, 245, 212, 0.3) !important;
         transform: translateY(-2px) !important;
     }
-    div[data-testid="stColumn"] div[data-testid="stDownloadButton"] button {
+    div[data-testid="stColumn"] div[data-testid="stDownloadButton"] button,
+    div[data-testid="stColumn"] div[data-testid="stLinkButton"] a {
         background: linear-gradient(135deg, #00f5d4 0%, #00bbf9 100%) !important;
         border: none !important;
         color: #070a13 !important;
@@ -78,8 +79,14 @@ def render_interview_kits():
         transition: all 0.2s ease-in-out !important;
         width: 100% !important;
         box-shadow: 0 0 15px rgba(0, 245, 212, 0.3) !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
-    div[data-testid="stColumn"] div[data-testid="stDownloadButton"] button:hover {
+    div[data-testid="stColumn"] div[data-testid="stDownloadButton"] button:hover,
+    div[data-testid="stColumn"] div[data-testid="stLinkButton"] a:hover {
         box-shadow: 0 0 25px rgba(0, 245, 212, 0.6) !important;
         transform: translateY(-2px) !important;
         color: #070a13 !important;
@@ -130,19 +137,31 @@ def render_interview_kits():
             # Action Buttons Row
             b_col1, b_col2 = st.columns(2, gap="small")
 
-            with b_col1:
-                if st.button("👁️ Preview", key=f"preview_btn_{k_id}_{idx}", use_container_width=True):
-                    show_kit_preview_dialog(k_title, img_path)
+            if k_id == "kit-ds":
+                with b_col1:
+                    st.button("₹99/-", key=f"price_btn_{k_id}_{idx}", use_container_width=True)
 
-            with b_col2:
-                st.download_button(
-                    label="📥 Download PDF",
-                    data=pdf_bytes,
-                    file_name=filename,
-                    mime="application/pdf",
-                    key=f"download_btn_{k_id}_{idx}",
-                    use_container_width=True
-                )
+                with b_col2:
+                    st.link_button(
+                        "Buy Now",
+                        "https://topmate.io/bhaskar_mandal/2230172",
+                        use_container_width=True,
+                        key=f"buy_now_btn_{k_id}_{idx}"
+                    )
+            else:
+                with b_col1:
+                    if st.button("👁️ Preview", key=f"preview_btn_{k_id}_{idx}", use_container_width=True):
+                        show_kit_preview_dialog(k_title, img_path)
+
+                with b_col2:
+                    st.download_button(
+                        label="📥 Download PDF",
+                        data=pdf_bytes,
+                        file_name=filename,
+                        mime="application/pdf",
+                        key=f"download_btn_{k_id}_{idx}",
+                        use_container_width=True
+                    )
 
             # Spacing below card
             render_html('<div style="margin-bottom: 1.75rem;"></div>')
