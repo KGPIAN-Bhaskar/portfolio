@@ -1,5 +1,4 @@
 import os
-import streamlit as st
 from data.profile_data import PROFILE_DATA
 from utils.html_render import render_html
 from utils.asset_loader import load_cached_base64

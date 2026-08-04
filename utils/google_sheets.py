@@ -1,14 +1,11 @@
 import os
 import json
 import html
-import logging
 import ssl
 import urllib.request
 import urllib.parse
 from datetime import datetime
 import streamlit as st
-
-logger = logging.getLogger(__name__)
 
 try:
     import requests

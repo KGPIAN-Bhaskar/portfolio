@@ -1,9 +1,6 @@
 import os
-import logging
 import streamlit as st
 import streamlit.components.v1 as components
-
-logger = logging.getLogger(__name__)
 
 try:
     from dotenv import load_dotenv
