@@ -148,6 +148,17 @@ def render_interview_kits():
                         use_container_width=True,
                         key=f"buy_now_btn_{k_id}_{idx}"
                     )
+            elif k_id == "kit-dsa":
+                with b_col1:
+                    st.button("₹99/-", key=f"price_btn_{k_id}_{idx}", use_container_width=True)
+
+                with b_col2:
+                    st.link_button(
+                        "Buy Now",
+                        "https://topmate.io/bhaskar_mandal/2233687",
+                        use_container_width=True,
+                        key=f"buy_now_btn_{k_id}_{idx}"
+                    )
             else:
                 with b_col1:
                     if st.button("👁️ Preview", key=f"preview_btn_{k_id}_{idx}", use_container_width=True):
